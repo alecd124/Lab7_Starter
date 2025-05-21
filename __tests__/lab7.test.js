@@ -58,9 +58,7 @@ describe('Basic user flow for Website', () => {
       const shadow = await item.getProperty('shadowRoot')
       const btn = await shadow.$('button');
       const txt = await (await btn.getProperty('innerText')).jsonValue();
-      if (txt === 'Add to Cart') {
-        await btn.click()
-      }
+      if (txt === 'Add to Cart') await btn.click()
       const count = await page.$eval('#cart-count', el => el.innerText);
       expect(count).toBe('20');
   }, 10000);
