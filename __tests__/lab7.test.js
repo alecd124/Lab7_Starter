@@ -51,17 +51,19 @@ describe('Basic user flow for Website', () => {
 
   // Check to make sure that after clicking "Add to Cart" on every <product-item> that the Cart
   // number in the top right has been correctly updated
-  it('Checking number of items in cart on screen', async () => {
-    console.log('Checking number of items in cart on screen...');
-    const items = await page.$$('product-item');
-    for (const item of items) {
-      const shadow = await item.getProperty('shadowRoot')
-      const btn = await shadow.$('button');
-      const txt = await (await btn.getProperty('innerText')).jsonValue();
-      if (txt === 'Add to Cart') await btn.click()
-      const count = await page.$eval('#cart-count', el => el.innerText);
-      expect(count).toBe('20');
-  }, 10000);
+ it('Checking number of items in cart on screen', async () => {
+  const items = await page.$$('product-item');
+
+  for (const item of items) {
+    const shadow = await item.getProperty('shadowRoot');
+    const btn    = await shadow.$('button');
+    const txt    = await (await btn.getProperty('innerText')).jsonValue();
+    if (txt === 'Add to Cart') await btn.click();   // add ()
+  }                               // ← closes the for-loop
+  const count = await page.$eval('#cart-count', el => el.innerText);
+  expect(count).toBe('20');
+}, 10000);
+
 
   // Check to make sure that after you reload the page it remembers all of the items in your cart
   it('Checking number of items in cart on screen after reload', async () => {
