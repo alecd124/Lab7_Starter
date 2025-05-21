@@ -46,7 +46,7 @@ describe('Basic user flow for Website', () => {
     const button = await shadowRoot.$('button')
     await button.click();
     const text = await (await button.getProperty('innerText')).jsonValue()
-    
+    expect(text).toBe('Remove from Cart');
   }, 2500);
 
   // Check to make sure that after clicking "Add to Cart" on every <product-item> that the Cart
@@ -59,7 +59,7 @@ describe('Basic user flow for Website', () => {
       const btn = await shadow.$('button');
       const txt = await (await btn.getProperty('innerText')).jsonValue();
       if (txt === 'Add to Cart') {
-        await btn.click
+        await btn.click()
       }
       const count = await page.$eval('#cart-count', el => el.innerText);
       expect(count).toBe('20');
